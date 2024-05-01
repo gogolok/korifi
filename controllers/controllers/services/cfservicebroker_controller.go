@@ -50,6 +50,10 @@ func toBrokerServiceOffering(catalogService Service) korifiv1alpha1.BrokerServic
 		raw_metadata, _ = json.Marshal(catalogService.Metadata)
 	}
 
+	// HACK: remove once metadata is fixed upstream!
+	mapD := map[string]string{"apple": "yes", "lettuce": "no"}
+	raw_metadata, _ = json.Marshal(mapD)
+
 	var documentationUrl *string
 	if u, ok := catalogService.Metadata["documentationUrl"]; ok {
 		documentationUrl = tools.PtrTo(u.(string))
@@ -82,6 +86,11 @@ func toBrokerServicePlan(offeringGUID string, catalogPlan Plan) korifiv1alpha1.B
 	if catalogPlan.Metadata != nil {
 		raw_metadata, _ = json.Marshal(catalogPlan.Metadata)
 	}
+
+	// HACK: remove once metadata is fixed upstream!
+	mapD := map[string]string{"apple": "yes", "lettuce": "no"}
+	raw_metadata, _ = json.Marshal(mapD)
+
 	return korifiv1alpha1.BrokerServicePlan{
 		Name:             catalogPlan.Name,
 		Free:             catalogPlan.Free,
