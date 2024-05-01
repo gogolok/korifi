@@ -471,6 +471,8 @@ func (r *brokerRequester) sendRequest(ctx context.Context, requestPath string, m
 	auth := base64.StdEncoding.EncodeToString([]byte(authPlain))
 	req.Header.Add("Authorization", "Basic "+auth)
 
+	req.Header.Add("X-Broker-API-Version", "2.17")
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return 0, nil, fmt.Errorf("failed to execute HTTP request: %w", err)
